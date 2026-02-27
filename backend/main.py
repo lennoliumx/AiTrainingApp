@@ -1,12 +1,17 @@
 from fastapi import FastAPI # FastAPI: Intermediate between Frontend nad Backend
+
 from sqlmodel import create_engine # SQLModel: ORM; used to use SQL as python classes
 from sqlmodel import SQLModel
+from sqlmodel import Session
+
 from contextlib import asynccontextmanager  
+from models import Workouts
+
 
 
 DATABASE_URL = "postgresql://postgres:test@localhost:5431/postgres"
 
-engine = create_engine(DATABASE_URL, echo=True) 
+engine = create_engine(DATABASE_URL, echo=True) # echo = True; means the sql commnds should be printed
 # enigne is a connection between python and the database
 
 @asynccontextmanager
@@ -28,4 +33,14 @@ def read_item(item_id: int, q: str | None = None):
 def return_message():
     return {"message": "Here are all your workouts"}
 
+@app.post("/workouts") # post: protocol for sending data
+def add_workout(workout: Workouts):
+    with Session(engine) as session: # session: the delivery using the connection (engine) to access the database
+         
+        session.add(workout)
 
+        session.commit()
+
+        session.refresh(workout)
+
+        return workout
