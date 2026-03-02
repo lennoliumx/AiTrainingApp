@@ -16,7 +16,7 @@ from google.genai import types
 
 load_dotenv()
 
-GEMINI_API_KEY= os.getenv("GEMINI_API_KEY")
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
 client = genai.Client(api_key=GEMINI_API_KEY)
 
@@ -91,5 +91,7 @@ def add_workout(workout: Workout):
 
 @app.post("/ai-coach")
 def receive_prompt(prompt: Prompt):
+
+
 
     return {"status": "received", "message": prompt}
