@@ -8,6 +8,17 @@ from contextlib import asynccontextmanager
 
 from models import Workout, Prompt
 
+from dotenv import load_dotenv
+import os
+
+from google import genai
+from google.genai import types
+
+load_dotenv()
+
+GEMINI_API_KEY= os.getenv("GEMINI_API_KEY")
+
+client = genai.Client(api_key=GEMINI_API_KEY)
 
 
 DATABASE_URL = "postgresql://postgres:test@localhost:5431/postgres"
