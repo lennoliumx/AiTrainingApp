@@ -6,7 +6,7 @@ from sqlmodel import create_engine, SQLModel, Session, select, Field # SQLModel:
 
 from contextlib import asynccontextmanager  
 
-from models import Workouts, Prompts
+from models import Workout, Prompt
 
 
 
@@ -41,7 +41,7 @@ def read_root():
 @app.get("/workouts/{workout_id}")
 def read_workout(workout_id: int):
     with Session(engine) as session:
-        workout = session.get(Workouts, workout_id)
+        workout = session.get(Workout, workout_id)
 
         if not workout:
             raise HTTPException(status_code=404, detail="Workout not found")
@@ -51,7 +51,7 @@ def read_workout(workout_id: int):
 @app.delete("/workouts/{workout_id}")
 def delete_workout(workout_id:int):
     with Session(engine) as session:
-        workout = session.get(Workouts, workout_id)
+        workout = session.get(Workout, workout_id)
         if not workout:
             raise HTTPException(status_code=404, detail="not found")
         session.delete(workout)
@@ -62,12 +62,12 @@ def delete_workout(workout_id:int):
 @app.get("/workouts")
 def view_workouts():
     with Session(engine) as session:
-        statement = select(Workouts)
+        statement = select(Workout)
         results = session.exec(statement)
         return results.all()
 
 @app.post("/workouts") # post: protocol for sending data
-def add_workout(workout: Workouts):
+def add_workout(workout: Workout):
     with Session(engine) as session: # session: the delivery using the connection (engine) to access the database
          
         session.add(workout)
@@ -79,6 +79,6 @@ def add_workout(workout: Workouts):
         return workout
 
 @app.post("/ai-coach")
-def receive_prompt(prompt: Prompts):
+def receive_prompt(prompt: Prompt):
 
     return {"status": "received", "message": prompt}
