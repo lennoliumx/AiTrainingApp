@@ -5,7 +5,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlmodel import create_engine, SQLModel, Session, select, Field # SQLModel: ORM; used to use SQL as python classes
 
 from contextlib import asynccontextmanager  
-from models import Workouts
+
+from models import Workouts, Prompts
 
 
 
@@ -76,3 +77,8 @@ def add_workout(workout: Workouts):
         session.refresh(workout)
 
         return workout
+
+@app.post("/ai-coach")
+def receive_prompt(prompt: Prompts):
+
+    return {"status": "received", "message": prompt}
