@@ -12,5 +12,5 @@ class Workout(SQLModel, table=True):
     notes: Optional[str]
 
 
-class Prompts(SQLModel):
+class Prompt(SQLModel):
     user_message: str
