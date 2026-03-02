@@ -2,39 +2,52 @@
 
 import {useState,  useEffect} from "react";
 
-
 interface Workouts{
-  id: Number;
+  id: number;
   date: string;
   type: string;
-  duration: Number;
-  distance: Number
-  tss: Number;
+  duration: number;
+  distance: number
+  tss: number;
   notes: string
-
 }
-
-const [workouts, setWorkouts] = useState<Workouts[]>([])
 
 
 export default function Home() {
+
+  const [workouts, setWorkouts] = useState<Workouts[]>([])
+
+  useEffect(() => {
+    fetch('http://localhost:8000/workouts')
+      .then(response => response.json())
+      .then(obj => setWorkouts(obj))
+  }, [])
+
+  console.log(workouts)
+
   return (
     <main className="p-8">
       <h1 className="text-4xl font-bold text-blue-600">
         My Workout Dashboard
       </h1>
-      <p className="mt-4 text-gray-600">
-        Connecting to FastAPI soon...
-      </p>
+      
+      {workouts.map((workout) =>
+    
+        <div key={workout.id}>
+          <p>
+            type: {workout.type} <br/>
+            duration: {workout.duration} <br/>
+            date: {workout.date} <br/>
+            distance: {workout.distance} <br/>
+          </p>
+        </div>
+  
+      )}
+
+
     </main>
   );
 }
 
-    // id: Optional[int]  = Field(default=None,primary_key=True)
-    // date: date
-    // type: str
-    // duration: int
-    // distance: float
-    // tss: Optional[int]
-    // notes: Optional[str]
+
     
