@@ -1,0 +1,25 @@
+# ========================
+# 1. PYTHON (Backend)
+# ========================
+__pycache__/
+*.py[cod]
+backend/.venv/
+venv/
+
+# ========================
+# 2. NODE/NEXT.JS (Frontend)
+# ========================
+node_modules/
+.next/
+npm-debug.log
+
+# ========================
+# 3. OS STUFF
+# ========================
+.DS_Store
+Thumbs.db
+
+# ========================
+# 4. SECRETS & CONFIG
+# ========================
+.env
