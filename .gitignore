@@ -1,10 +1,10 @@
 # ========================
 # 1. PYTHON (Backend)
 # ========================
-__pycache__/
+backend/__pycache__/
 *.py[cod]
 backend/.venv/
-venv/
+backend/venv/
 
 # ========================
 # 2. NODE/NEXT.JS (Frontend)
