@@ -16,9 +16,8 @@ engine = create_engine(DATABASE_URL, echo=True) # echo = True; means the sql com
 
 @asynccontextmanager
 async def lifespan(app: FastAPI): # execute something on boot up
-    SQLModel.metadata.create_all(engine) #create tables stored in the metadata -- table is store in metadata upon setting table=True in class creation
+    SQLModel.metadata.create_all(engine) # create tables stored in the metadata -- table is store in metadata upon setting table=True in class creation
     yield
-
 app = FastAPI(lifespan=lifespan)
 
 origins = [
