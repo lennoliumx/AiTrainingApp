@@ -14,11 +14,12 @@ import os
 from google import genai
 from google.genai import types
 
-load_dotenv()
+load_dotenv("../settings.env")
 
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
 client = genai.Client(api_key=GEMINI_API_KEY)
+
 
 
 DATABASE_URL = "postgresql://postgres:test@localhost:5431/postgres"
@@ -32,8 +33,8 @@ async def lifespan(app: FastAPI): # execute something on boot up
     yield
 app = FastAPI(lifespan=lifespan)
 
-origins = [
-    "http://localhost:3000", # CORS whitelist
+origins = [ # CORS whitelist
+    "http://localhost:3000", 
     "http://127.0.0.1:3000", 
 ]
 
@@ -75,6 +76,7 @@ def view_workouts():
     with Session(engine) as session:
         statement = select(Workout)
         results = session.exec(statement)
+
         return results.all()
 
 @app.post("/workouts") # post: protocol for sending data
