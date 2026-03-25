@@ -94,6 +94,6 @@ def add_workout(workout: Workout):
 @app.post("/ai-coach")
 def receive_prompt(prompt: Prompt):
 
-
+    
 
     return {"status": "received", "message": prompt}
