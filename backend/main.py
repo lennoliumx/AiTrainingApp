@@ -6,7 +6,7 @@ from sqlmodel import create_engine, SQLModel, Session, select, Field # SQLModel:
 
 from contextlib import asynccontextmanager  
 
-from models import Workout, Prompt, AIPlan
+from models import Workout, Prompt
 
 from dotenv import load_dotenv
 import os
@@ -18,10 +18,7 @@ load_dotenv("../settings.env")
 
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
-print(GEMINI_API_KEY)
-
-# client = genai.Client(api_key=GEMINI_API_KEY)
-
+client = genai.Client(api_key=GEMINI_API_KEY)
 
 
 
@@ -97,22 +94,6 @@ def add_workout(workout: Workout):
 @app.post("/ai-coach")
 def receive_prompt(prompt: Prompt):
 
-    with Session(engine) as session:
-        statement = select(Workout)
-        result = session.exec(statement)
-        current_workouts_list = result.all()
+    
 
-    mega_prompt = f"Your job is to structure a training plan according to user requests. Current workouts: {current_workouts_list}. User message: {prompt.user_message}"
-
-
-    response = client.models.generate_content(
-        model="gemini-2.5-flash-preview",
-        contents=mega_prompt,
-        config=types.GenerateContentConfig(
-            response_mime_type= "application/json",
-            response_schema = AIPlan
-        ),
-    )
-
-    return {"status": "received", "message": response.text}
-
+    return {"status": "received", "message": prompt}
